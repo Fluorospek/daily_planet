@@ -36,6 +36,27 @@ def load_markdown(path):
 def load_html(path):
 
     soup = BeautifulSoup(Path(path).read_text(encoding="utf-8"), "html.parser")
-    text = soup.get_text(separator="\n")
-    clean = "\n".join(line.strip() for line in text.splitlines() if line .strip())
-    return Document(text = clean, metadata={"source": Path(path).name})
+    for tag in soup(["nav", "header", "footer", "aside", "script", "style"]):
+        tag.decompose()
+    body = soup.find("article") or soup.body or soup
+    text = body.get_text(separator="\n")
+    clean = "\n".join(line.strip() for line in text.splitlines() if line.strip())
+    meta = {
+        "source": Path(path).name,
+        "title": soup.title.get_text(strip=True) if soup.title else Path(path).stem,
+        "section": "Wire",
+        "publication": "MetroWire"
+    }
+    return Document(content = clean, metadata = meta)
+
+LOADERS = {".md": load_markdown, ".txt": load_markdown, ".html": load_html}
+
+def ingest_folder(folder):
+
+    docs = []
+    for path in sorted(Path(folder).rglob("*")):
+        loader = LOADERS.get(path.suffix.lower())
+        if loader is None:
+            continue
+        docs.append(loader(path))
+    return docs
