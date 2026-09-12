@@ -1,0 +1,8 @@
+langchain-text-splitters
+beautifulsoup4
+tiktoken
+faiss-cpu
+qdrant-client
+numpy
+python-dotenv
+sentence-transformers
