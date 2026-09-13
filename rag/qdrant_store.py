@@ -9,17 +9,24 @@ from qdrant_client.models import (
 
 class QdrantStore:
 
-    def __init__(self, dim, collection="daily_planet", url=None):
+    def __init__(self, dim: int | None = None, collection: str = "daily_planet", url: str | None = None, recreate: bool = False):
         self.client = QdrantClient(
             url = url or os.getenv("QDRANT_URL", "http://localhost:6333")
         )
         self.collection = collection
-        if self.client.collection_exists(collection):
+        exists = self.client.collection_exists(collection)
+        if recreate and exists:
             self.client.delete_collection(collection)
-        self.client.create_collection(
-            collection_name=collection,
-            vectors_config=VectorParams(size=dim, distance=Distance.COSINE)
-        )
+            exists = False
+
+        if not exists:
+            if dim is None:
+                from rag.embed import embed_query
+                dim = len(embed_query("dimension_probe"))
+            self.client.create_collection(
+                collection_name=collection,
+                vectors_config=VectorParams(size=dim, distance=Distance.COSINE)
+            )
 
     def add(self, vectors, chunks):
         points = [
