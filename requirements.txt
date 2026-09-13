@@ -6,3 +6,4 @@ qdrant-client
 numpy
 python-dotenv
 sentence-transformers
+huggingface_hub
