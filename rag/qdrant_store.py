@@ -21,8 +21,7 @@ class QdrantStore:
 
         if not exists:
             if dim is None:
-                from rag.embed import embed_query
-                dim = len(embed_query("dimension_probe"))
+                raise ValueError("Embedding dimension (dim) must be provided for new collections.")
             self.client.create_collection(
                 collection_name=collection,
                 vectors_config=VectorParams(size=dim, distance=Distance.COSINE)
