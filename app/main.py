@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from .models import SearchRequest, SearchResponse
-from .services import search
+from .models import SearchRequest, SearchResponse, AskRequest, AskResponse
+from .services import search, ask
 
 app = FastAPI(
     title="Daily Planet RAG",
@@ -16,3 +16,8 @@ def health_check():
 def search_endpoint(req: SearchRequest):
     results = search(req.query, req.k)
     return SearchResponse(results = results)
+
+@app.post("/ask", response_model=AskResponse)
+def ask_endpoint(req: AskRequest):
+    result = ask(req.question)
+    return AskResponse(**result)

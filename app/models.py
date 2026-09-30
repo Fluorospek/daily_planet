@@ -14,3 +14,15 @@ class SearchResult(BaseModel):
 
 class SearchResponse(BaseModel):
     results: List[SearchResult]
+
+class AskRequest(BaseModel):
+    question: str = Field(..., min_length=1, max_length=1000)
+
+class SourceInfo(BaseModel):
+    source: str
+    chunk_id: str
+
+class AskResponse(BaseModel):
+    answer: str
+    sources: List[SourceInfo]
+    confidence: str
