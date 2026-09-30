@@ -27,6 +27,36 @@ class QdrantStore:
                 vectors_config=VectorParams(size=dim, distance=Distance.COSINE)
             )
 
+    @classmethod
+    def connect(cls, collection="daily_planet", url=None):
+        """Reconnect to an existing collection without deleting/recreating it
+        """
+        store=cls.__new__(cls)
+        store.client = QdrantClient(url = url or os.getenv("QDRANT_URL", "http://localhost:6333"))
+        store.collection = collection
+        return store
+
+    def search_with_filter(self, query_vector, query_filter=None, k=5):
+        q_vec = query_vector.tolist() if hasattr(query_vector, "tolist") else list(query_vector)
+
+        if hasattr(self.client, "query_points"):
+            response = self.client.query_points(
+                collection_name=self.collection,
+                query=q_vec,
+                limit=k,
+                query_filter=query_filter,
+            )
+            return [(hit.score, hit.payload) for hit in response.points]
+        else:
+            hits = self.client.search(
+                collection_name=self.collection,
+                query_vector=q_vec,
+                limit=k,
+                query_filter=query_filter,
+            )
+            return [(hit.score, hit.payload) for hit in hits]
+
+
     def add(self, vectors, chunks):
         points = [
             PointStruct(
@@ -51,21 +81,4 @@ class QdrantStore:
                 ]
             )
 
-        q_vec = query_vector.tolist() if hasattr(query_vector, "tolist") else list(query_vector)
-
-        if hasattr(self.client, "query_points"):
-            response = self.client.query_points(
-                collection_name=self.collection,
-                query=q_vec,
-                limit=k,
-                query_filter=query_filter,
-            )
-            return [(hit.score, hit.payload) for hit in response.points]
-        else:
-            hits = self.client.search(
-                collection_name=self.collection,
-                query_vector=q_vec,
-                limit=k,
-                query_filter=query_filter,
-            )
-            return [(hit.score, hit.payload) for hit in hits]
+        return self.search_with_filter(query_vector=query_vector, query_filter=query_filter, k=k)
