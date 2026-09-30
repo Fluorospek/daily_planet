@@ -4,6 +4,7 @@ date: 2026-08-04
 author: Clark Kent
 section: Business
 publication: Daily Planet
+visibility: public
 ---
 A day after the city council approved the downtown arena budget, business owners along the riverfront were weighing what the project means for them, with reactions ranging from optimism to unease.
 

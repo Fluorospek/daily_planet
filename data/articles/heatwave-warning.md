@@ -4,6 +4,7 @@ date: 2026-08-10
 author: Daily Planet Staff
 section: Weather
 publication: Daily Planet
+visibility: public
 ---
 The National Weather Service has issued a heat advisory for the metro area, with temperatures expected to reach 39 degrees Celsius over the weekend and little relief overnight.
 

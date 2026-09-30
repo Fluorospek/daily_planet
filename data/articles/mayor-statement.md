@@ -4,6 +4,7 @@ date: 2026-08-04
 author: Daily Planet Staff
 section: City
 publication: Daily Planet
+visibility: public
 ---
 The following is the full statement issued by Mayor Perry White on Tuesday, following the city council's approval of the downtown arena budget.
 

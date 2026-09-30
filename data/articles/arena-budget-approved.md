@@ -4,6 +4,7 @@ date: 2026-08-03
 author: Lois Lane
 section: City
 publication: Daily Planet
+visibility: public
 ---
 The city council voted 7 to 2 on Monday night to approve a 480 million dollar budget for the new downtown arena, ending months of debate over one of the largest public projects in the city's history.
 

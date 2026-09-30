@@ -4,6 +4,7 @@ date: 2026-08-12
 author: Lois Lane
 section: City
 publication: Daily Planet
+visibility: public
 ---
 A civic watchdog group filed suit in county court on Wednesday seeking to block the city from issuing bonds for the downtown arena, arguing council members violated the state's open-meetings law by holding a private briefing before last week's vote.
 

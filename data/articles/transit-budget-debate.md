@@ -4,6 +4,7 @@ date: 2026-07-28
 author: Iris West
 section: City
 publication: Daily Planet
+visibility: public
 ---
 With a vote on transit improvements scheduled for September, city council members clashed this week over how to fund an aging bus and rail network that carries more than 300,000 riders a day.
 
