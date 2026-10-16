@@ -8,3 +8,4 @@ __pycache__/
 *.faiss
 *.chunks.json
 qdrant_storage
+evaluation_results.json

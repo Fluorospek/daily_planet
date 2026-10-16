@@ -5,7 +5,7 @@ import os
 
 load_dotenv()
 
-_MODEL_NAME=os.getenv("CROSS_ENCODER_MODEL")
+_MODEL_NAME = os.getenv("CROSS_ENCODER_MODEL", "cross-encoder/ms-marco-MiniLM-L6-v2")
 _model = None
 
 def _get_model():

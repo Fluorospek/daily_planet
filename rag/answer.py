@@ -35,7 +35,7 @@ def answer_question(question, bm25_store, faiss_store, k=4, candidate_k=20):
     chunks = [chunk for _score, chunk in reranked]
     answer_text = generate_answer(question, chunks)
     sources = [
-        {"source": c['metadata']['source'], "chunk_id": c['metadata']['chunk_id']} for c in chunks
+        {"source": c['metadata']['source'], "chunk_id": c['metadata']['chunk_id'], "text": c.get('text', '')} for c in chunks
     ]
     return {
         "answer": answer_text,

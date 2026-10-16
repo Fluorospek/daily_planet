@@ -19,6 +19,11 @@ class FaissStore:
     def search(self,query_vector,top_k=5):
         q = np.array([query_vector], dtype="float32")
         faiss.normalize_L2(q)
+        if q.shape[1] != self.index.d:
+            raise ValueError(
+                f"Query vector dimension ({q.shape[1]}) does not match FAISS index dimension ({self.index.d}). "
+                "Please rebuild index using 'python build_index.py'."
+            )
         scores, ids = self.index.search(q,top_k)
         results=[]
         for score, i in zip(scores[0], ids[0]):
