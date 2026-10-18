@@ -75,7 +75,15 @@ def main():
 
     # save results in a file
     with open("evaluation_results.json", "w", encoding="utf-8") as f:
-        json.dump(results, f, indent=2, ensure_ascii=False)
+        summary = {
+            "hit_rate": overall_hit_rate,
+            "mrr": overall_mrr,
+            "faithfulness": faithfulness_rate,
+            "total_questions": len(results),
+            "answered": len(retrieval_results),
+            "faithful": len(faithful_results),
+        }
+        json.dump({"summary": summary, "questions": results}, f, indent=2, ensure_ascii=False)
 
 if __name__ == "__main__":
     main()
